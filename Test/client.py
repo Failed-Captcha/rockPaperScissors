@@ -1,8 +1,7 @@
 import pygame
-from networkFile import Network
+from network import Network
 import pickle
 pygame.font.init()
-#https://www.techwithtim.net/tutorials/python-online-game-tutorial/online-rock-paper-scissors-p-4/
 
 width = 700
 height = 700
@@ -84,13 +83,12 @@ def redrawWindow(win, game, p):
 
 btns = [Button("Rock", 50, 500, (0,0,0)), Button("Scissors", 250, 500, (255,0,0)), Button("Paper", 450, 500, (0,255,0))]
 def main():
-    run = True
     clock = pygame.time.Clock()
     n = Network()
     player = int(n.getP())
     print("You are player", player)
 
-    while run:
+    while True:
         clock.tick(60)
         try:
             game = n.send("get")
@@ -123,7 +121,6 @@ def main():
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                run = False
                 pygame.quit()
 
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -140,10 +137,9 @@ def main():
         redrawWindow(win, game, player)
 
 def menu_screen():
-    run = True
     clock = pygame.time.Clock()
 
-    while run:
+    while True:
         clock.tick(60)
         win.fill((128, 128, 128))
         font = pygame.font.SysFont("comicsans", 60)
@@ -154,11 +150,8 @@ def menu_screen():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-                run = False
             if event.type == pygame.MOUSEBUTTONDOWN:
-                run = False
+                main()
 
-    main()
 
-while True:
-    menu_screen()
+menu_screen()
