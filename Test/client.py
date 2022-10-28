@@ -1,5 +1,5 @@
 import pygame
-from network import Network
+from networkFile import Network
 import pickle
 pygame.font.init()
 
@@ -137,21 +137,29 @@ def main():
         redrawWindow(win, game, player)
 
 def menu_screen():
+    mode = "menu screen"
     clock = pygame.time.Clock()
 
     while True:
         clock.tick(60)
         win.fill((128, 128, 128))
-        font = pygame.font.SysFont("comicsans", 60)
+        
+        font = pygame.font.Font('freesansbold.ttf', 60)
         text = font.render("Click to Play!", 1, (255,0,0))
         win.blit(text, (100,200))
         pygame.display.update()
+        
+        event = pygame.event.poll() 
+        if event.type == pygame.QUIT:
+            break
 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                main()
+        elif event.type == pygame.MOUSEBUTTONUP:
+            if(mode=="menu screen"):
+                n = Network()
+                print(n.getP())
+                player = int(n.getP())
+                print("You are player", player)
+                mode = "main";
 
 
 menu_screen()
