@@ -1,0 +1,15 @@
+players connected: 
+name: 
+total points: 
+row1: 
+row2: 
+row3: 
+diceA1: 
+diceA2: 
+diceA3: 
+diceB1: 
+diceB2: 
+diceB3: 
+diceC1: 
+diceC2: 
+diceC3: 
