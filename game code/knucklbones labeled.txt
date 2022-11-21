@@ -1,9 +1,10 @@
-players connected: 
+players connected/ player number: 
 name: 
 total points: 
 row1: 
 row2: 
-row3: 
+row3:
+rolled dice:
 diceA1: 
 diceA2: 
 diceA3: 
