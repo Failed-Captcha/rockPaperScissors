@@ -17,9 +17,13 @@ def main():
     dieColumn1 = [0,0,0]
     dieColumn2 = [0,0,0]
     dieColumn3 = [0,0,0]
+    oppColumn1 = [0,0,0]
+    oppColumn2 = [0,0,0]
+    oppColumn3 = [0,0,0]
     dieRows = [0,0,0]
     
-    yPos = [450,530,600]
+    
+    yPos = [200,130,50,450,530,600]
     xPos = [460,570,680]
     white = [255,255,255]
     
@@ -125,11 +129,11 @@ def main():
                                 dieRows[2]+=1       
                                 diceValue = 0
                                 
-                            if diceValue == 0:
-                                if turn == 1:
-                                    turn = 2
-                                else:
-                                    turn = 1
+#                            if diceValue == 0:
+#                                 if turn == 1:
+#                                     turn = 2
+#                                 else:
+#                                     turn = 1
                 else: 
                     diceValue = random.randint(1,6)
                     diceRect = [60*diceValue-60,0,60,60]
@@ -140,14 +144,23 @@ def main():
             
             for i in range (3):
                 if dieColumn1[i]>0:
-                    pygame.draw.rect(mainSurface,white,(xPos[0],yPos[i],60,60))
-                    mainSurface.blit(die,(xPos[0],yPos[i]),[60*dieColumn1[i]-60,0,60,60])
+                    pygame.draw.rect(mainSurface,white,(xPos[0],yPos[i+3],60,60))
+                    mainSurface.blit(die,(xPos[0],yPos[i+3]),[60*dieColumn1[i]-60,0,60,60])
                 if dieColumn2[i]>0:
-                    pygame.draw.rect(mainSurface,white,(xPos[1],yPos[i],60,60))
-                    mainSurface.blit(die,(xPos[1],yPos[i]),[60*dieColumn2[i]-60,0,60,60])
+                    pygame.draw.rect(mainSurface,white,(xPos[1],yPos[i+3],60,60))
+                    mainSurface.blit(die,(xPos[1],yPos[i+3]),[60*dieColumn2[i]-60,0,60,60])
                 if dieColumn3[i]>0:
+                    pygame.draw.rect(mainSurface,white,(xPos[2],yPos[i+3],60,60))
+                    mainSurface.blit(die,(xPos[2],yPos[i+3]),[60*dieColumn3[i]-60,0,60,60])
+                if oppColumn1[i]>0:
+                    pygame.draw.rect(mainSurface,white,(xPos[0],yPos[i],60,60))
+                    mainSurface.blit(die,(xPos[0],yPos[i]),[60*oppColumn1[i]-60,0,60,60])
+                if oppColumn2[i]>0:
+                    pygame.draw.rect(mainSurface,white,(xPos[1],yPos[i],60,60))
+                    mainSurface.blit(die,(xPos[1],yPos[i]),[60*oppColumn2[i]-60,0,60,60])
+                if oppColumn3[i]>0:
                     pygame.draw.rect(mainSurface,white,(xPos[2],yPos[i],60,60))
-                    mainSurface.blit(die,(xPos[2],yPos[i]),[60*dieColumn3[i]-60,0,60,60])
+                    mainSurface.blit(die,(xPos[2],yPos[i]),[60*oppColumn3[i]-60,0,60,60])
             
             saveVariables = [turn,name,0,0,0,0,diceValue,dieColumn1[0],dieColumn1[1],dieColumn1[2],dieColumn2[0],dieColumn2[1],dieColumn2[2],dieColumn3[0],dieColumn3[1],dieColumn3[2]]
             file = open(player, 'w')
@@ -157,6 +170,15 @@ def main():
                 
             loadOpponent = [line.rstrip() for line in open(otherPlayer)]
             opponentName = loadOpponent[1]
+            oppColumn1[0] = int(loadOpponent[7])
+            oppColumn1[1] = int(loadOpponent[8])
+            oppColumn1[2] = int(loadOpponent[9])
+            oppColumn2[0] = int(loadOpponent[10])
+            oppColumn2[1] = int(loadOpponent[11])
+            oppColumn2[2] = int(loadOpponent[12])
+            oppColumn3[0] = int(loadOpponent[13])
+            oppColumn3[1] = int(loadOpponent[14])
+            oppColumn3[2] = int(loadOpponent[15])
             if int(loadOpponent[0])>0:
                 turn = loadOpponent[0]
             
