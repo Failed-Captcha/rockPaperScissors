@@ -11,6 +11,7 @@ def main():
     mode = "game select"
     font = pygame.font.Font('freesansbold.ttf', 35)
     knucklebonesBackground = pygame.image.load("knucklebonesbg.PNG")
+    rockpaperscissors = pygame.image.load("rockpaperscissors.png")
     die = pygame.image.load("die.png")
     diceRect = [0,0,60,60]
     diceValue = 0;
@@ -22,6 +23,9 @@ def main():
     oppColumn3 = [0,0,0]
     dieRows = [0,0,0]
     
+    oppHand = "?"
+    hand = "?"
+    rpsText = "vs"
     
     yPos = [200,130,50,450,530,600]
     xPos = [460,570,680]
@@ -50,6 +54,22 @@ def main():
                 
                 if ev.pos[0]>=775 and ev.pos[0]<=875 and ev.pos[1]>=500 and ev.pos[1]<=600:
                     reset();
+                
+                #if rock paper scissors button pressed
+                if ev.pos[0]>=450 and ev.pos[0]<=800 and ev.pos[1]>=200 and ev.pos[1]<=300:
+                    if playersConnected == 0:
+                        playerNum = 1
+                    elif playersConnected ==1:
+                        playerNum = 2
+                    if playersConnected < 3:
+                        
+                        loadVariables[0]= int(loadVariables[0])+1;
+                        file = open('knucklebones new game.txt', 'w')
+                        for i in range (len(loadVariables)):
+                            file.write(f'{loadVariables[i]}\n')
+                        file.close()
+                        
+                        mode = "rps"
                     
                 #if knucklebones button pressed
                 if ev.pos[0]>=100 and ev.pos[0]<=400 and ev.pos[1]>=200 and ev.pos[1]<=300:
@@ -58,6 +78,7 @@ def main():
                     diceRect = [60*diceValue-60,0,60,60]
                     
                     #load new game variables
+                    turn = 1
                     if playersConnected == 0:
                         if name == "":
                             name = "player 1"
@@ -78,15 +99,15 @@ def main():
                         for i in range (len(loadVariables)):
                             file.write(f'{loadVariables[i]}\n')
                         file.close()
-                    if playersConnected < 3:
+                        
                         print("knucklebones")
                         mode = "knucklebones"
-                    elif playersConnected > 2:
+                    else:
                         print("the game is full :(")
                         
                     file = open(player, 'w')
                     loadVariables[1] = name
-                    loadVariables[0] = 1
+                    loadVariables[0] = turn
                     for i in range (len(loadVariables)):
                         file.write(f'{loadVariables[i]}\n')
                     file.close()
@@ -95,11 +116,13 @@ def main():
             pygame.Surface.fill(mainSurface,(255,255,255))
             
             pygame.draw.rect(mainSurface,(100,100,100),(100,200,300,100))
-            pygame.draw.rect(mainSurface,(100,100,100),(450,200,300,100))
+            pygame.draw.rect(mainSurface,(100,100,100),(450,200,350,100))
             pygame.draw.rect(mainSurface,(200,200,200),(450,500,300,100))
             pygame.draw.rect(mainSurface,(200,200,200),(775,500,100,100))
             line = font.render("knucklebones",1,(0,0,0))
             mainSurface.blit(line,(125,240))
+            line = font.render("rock paper scissors",1,(0,0,0))
+            mainSurface.blit(line,(450,240))
             line = font.render("Enter Name:",1,(0,0,0))
             mainSurface.blit(line,(450,450))
             line = font.render(name,1,(0,0,0))
@@ -107,6 +130,80 @@ def main():
             line = font.render(f'{playersConnected}',1,(0,0,0))
             mainSurface.blit(line,(810,530))
             
+        if mode == "rps":
+                    
+            if hand != "?" and oppHand != "?":
+                if hand == oppHand:
+                    rpsText = "tie x-x"
+                elif hand == "rock":
+                    if oppHand == "paper":
+                        rpsText = "you lose :(("
+                    else:
+                        rpsText = "you won!!"
+                elif hand == "paper":
+                    if oppHand == "rock":
+                        rpsText = "winner B)"
+                    else:
+                        rpsText = "awkward..."
+                else:
+                    if oppHand == "paper":
+                        rpsText = "gg ;)"
+                    else:
+                        rpsText = "gg... i guess"
+                if ev.type == pygame.MOUSEBUTTONUP:
+                    hand = "?"
+                    oppHand = "?"
+                    rpsText = "vs"
+                    file = open('rps.txt', 'w')
+                    file.write("?\n?")
+                    file.close()
+            
+            if hand == "?" and ev.type == pygame.MOUSEBUTTONUP and ev.pos[1]>400 and ev.pos[1]<600:
+                if ev.pos[0]>400 and ev.pos[0]< 560:
+                        hand = "rock"
+                elif ev.pos[0]>570 and ev.pos[0]< 740:
+                    hand = "scissors"
+                elif ev.pos[0]> 750 and ev.pos[0]< 930:
+                    hand = "paper"
+                        
+            pygame.Surface.fill(mainSurface,(255,255,255))
+            mainSurface.blit(rockpaperscissors,(400,400),(0,0,530,200))
+            
+            if hand == "?":
+                handRect = 530
+            elif hand == "rock":
+                handRect = 0
+            elif hand == "paper":
+                handRect = 350
+            else:
+                handRect = 170
+            mainSurface.blit(rockpaperscissors,(400,150),(handRect,0,170,200))
+            
+            if oppHand == "?":
+                handRect = 530
+            elif oppHand == "rock":
+                handRect = 0
+            elif oppHand == "paper":
+                handRect = 350
+            else:
+                handRect = 170
+            mainSurface.blit(rockpaperscissors,(750,150),(handRect,0,170,200))
+            line = font.render(rpsText,1,(0,0,0))
+            mainSurface.blit(line,(620,250))
+            
+            loadVariables = [line.rstrip() for line in open('rps.txt')]
+            if playerNum == 1:
+                oppHand = loadVariables[1]
+                loadVariables[0] = hand
+                file = open('rps.txt', 'w')
+                file.write(f'{loadVariables[0]}\n{loadVariables[1]}\n')
+                file.close()
+            else:
+                oppHand = loadVariables[0]
+                loadVariables[1] = hand
+                file = open('rps.txt', 'w')
+                file.write(f'{loadVariables[0]}\n{loadVariables[1]}\n')
+                file.close()
         if mode == "knucklebones":
             mainSurface.blit(knucklebonesBackground,(0,0))
            
@@ -129,11 +226,11 @@ def main():
                                 dieRows[2]+=1       
                                 diceValue = 0
                                 
-#                            if diceValue == 0:
-#                                 if turn == 1:
-#                                     turn = 2
-#                                 else:
-#                                     turn = 1
+                            if diceValue == 0:
+                                if turn == 1:
+                                    turn = 2
+                                else:
+                                    turn = 1
                 else: 
                     diceValue = random.randint(1,6)
                     diceRect = [60*diceValue-60,0,60,60]
@@ -168,27 +265,28 @@ def main():
                 file.write(f'{saveVariables[i]}\n')
             file.close()
                 
-            loadOpponent = [line.rstrip() for line in open(otherPlayer)]
-            opponentName = loadOpponent[1]
-            oppColumn1[0] = int(loadOpponent[7])
-            oppColumn1[1] = int(loadOpponent[8])
-            oppColumn1[2] = int(loadOpponent[9])
-            oppColumn2[0] = int(loadOpponent[10])
-            oppColumn2[1] = int(loadOpponent[11])
-            oppColumn2[2] = int(loadOpponent[12])
-            oppColumn3[0] = int(loadOpponent[13])
-            oppColumn3[1] = int(loadOpponent[14])
-            oppColumn3[2] = int(loadOpponent[15])
-            if int(loadOpponent[0])>0:
-                turn = loadOpponent[0]
+            loadVariables = [line.rstrip() for line in open(otherPlayer)]
+            print(loadVariables)
+            opponentName = loadVariables[1]
+            oppColumn1[0] = int(loadVariables[7])
+            oppColumn1[1] = int(loadVariables[8])
+            oppColumn1[2] = int(loadVariables[9])
+            oppColumn2[0] = int(loadVariables[10])
+            oppColumn2[1] = int(loadVariables[11])
+            oppColumn2[2] = int(loadVariables[12])
+            oppColumn3[0] = int(loadVariables[13])
+            oppColumn3[1] = int(loadVariables[14])
+            oppColumn3[2] = int(loadVariables[15])
+            if int(loadVariables[0])>0:
+                turn = loadVariables[0]
             
             line = font.render(name,1,(255,255,255))
             mainSurface.blit(line,(100,400))
             line = font.render(opponentName,1,(255,255,255))
             mainSurface.blit(line,(960,425))
         
-        #print(pygame.mouse.get_pos())
-        #print(turn)
+        print(pygame.mouse.get_pos())
+        #print(hand,oppHand)
         pygame.display.flip()
         clock.tick(60)
         
@@ -211,6 +309,9 @@ def reset():
         for i in range (len(loadVariables)):
             file.write(f'{loadVariables[i]}\n')
         file.close()
+    file = open('rps.txt', 'w')
+    file.write('?\n?')
+    file.close()
 
     
 main()
