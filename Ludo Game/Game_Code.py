@@ -1,4 +1,4 @@
-from tkinter import *  # Tkinter is used as the GUI.
+from tkinter import *  # Tkinter is used as the GUI
 from tkinter import messagebox
 import sys
 import os
@@ -74,10 +74,8 @@ GREENKILL = False
 YELLOWKILL = False
 
 
-
-def board():                            #Drawing the board, piece by piece.
-
-                                        
+def board():  #Function to draw the board, piece by piece
+                                       
     tkinter.messagebox.showinfo(title=None, message="TO START GAME PRESS OKAY")  #Splash Screen
     v = 0
     z = 0
@@ -307,48 +305,40 @@ def main():  # Main game function
         for i in range(6):
             box[i].x = 300
             box[i].y = (700 - (50 * i))
-
         for i in range(6, 12):
             box[i].x = (250 - (50 * (i - 6)))
             box[i].y = (400)
-
         box[12].x = 0
         box[12].y = 350
 
         for i in range(13, 19):
             box[i].x = (0 + (50 * (i - 13)))
             box[i].y = (300)
-
         for i in range(19, 25):
             box[i].x = (300)
             box[i].y = (250 - (50 * (i - 19)))
-
         box[25].x = 350
         box[25].y = 0
 
         for i in range(26, 32):
             box[i].x = (400)
             box[i].y = (0 + (50 * (i - 26)))
-
         for i in range(32, 38):
             box[i].x = (450 + (50 * (i - 32)))
             box[i].y = (300)
-
         box[38].x = 700
         box[38].y = 350
 
         for i in range(39, 45):
             box[i].x = (700 - (50 * (i - 39)))
             box[i].y = (400)
-
         for i in range(45, 51):
             box[i].x = (400)
             box[i].y = (450 + (50 * (i - 45)))
-
         box[51].x = 350
         box[51].y = 700
 
-        #red
+        #Red
         lx = 14
         for i in range(52):
             redbox[i].x = box[lx].x
@@ -356,30 +346,27 @@ def main():  # Main game function
             lx = lx + 1
             if lx > 51:
                 lx = 0
-
         lx = 50
         for i in range(7):
             redbox[lx].x = (0 + (50 * i))
             redbox[lx].y = 350
             lx = lx + 1
         
-        #blue
+        #Blue
         lx = 1
         for i in range(52):
-
             bluebox[i].x = box[lx].x
             bluebox[i].y = box[lx].y
             lx = lx + 1
             if lx > 51:
                 lx = 0
-
         lx = 50
         for i in range(7):
             bluebox[lx].x = 350
             bluebox[lx].y = (700 - (50 * i))
             lx = lx + 1
         
-        #yellow
+        #Yellow
         lx = 40
         for i in range(52):
             yellowbox[i].x = box[lx].x
@@ -387,24 +374,20 @@ def main():  # Main game function
             lx = lx + 1
             if lx > 51:
                 lx = 0
-
         lx = 50
         for i in range(7):
             yellowbox[lx].x = (700 - (50 * i))
             yellowbox[lx].y = (350)
             lx = lx + 1
 
-        #green
+        #Green
         lx = 27
         for i in range(52):
-
             greenbox[i].x = box[lx].x
             greenbox[i].y = box[lx].y
-
             lx = lx + 1
             if lx > 51:
                 lx = 0
-
         lx = 50
         for i in range(7):
             greenbox[lx].x = 350
@@ -420,7 +403,7 @@ def main():  # Main game function
 
     else:  #Game Code
 
-        if c >= 1:                                #This condition is true when a click is made.
+        if c >= 1:  #If a click has been made
 
 #-----------------------------------------------RED PLAYER'S TURN-----------------------------------------------------------------
             if RED == True and TURN == False:      #Red players turn
@@ -519,7 +502,7 @@ def main():  # Main game function
 
                         if ((((cx > blue[i].x0 + 13) and (cx < blue[i].x + 13)) and (
                             (cy > blue[i].y0 + 14) and (cy < blue[i].y + 14)))
-                            and ((blue[i].x0 > 270) or (blue[i].y0 < 470))):
+                            and ((blue[i].x0 > 270) or (blue[i].y0 < 470))):  #Change in position values 
                             bb = ((blue[i].num) + rolls[0 + nc])
                             if bb > 57:
                                 break
@@ -578,7 +561,7 @@ def main():  # Main game function
 
                         if ((((cx > yellow[i].x0 + 13) and (cx < yellow[i].x + 13)) and (
                                     (cy > yellow[i].y0 + 14) and (cy < yellow[i].y + 14)))
-                            and ((yellow[i].x0 < 470) or (yellow[i].y0 < 470))):
+                            and ((yellow[i].x0 < 470) or (yellow[i].y0 < 470))):  
                             bb = ((yellow[i].num) + rolls[0 + nc])
                             if bb > 57:
                                 break
@@ -639,7 +622,7 @@ def main():  # Main game function
 
                         if ((((cx > green[i].x0 + 13) and (cx < green[i].x + 13)) and (
                                     (cy > green[i].y0 + 14) and (cy < green[i].y + 14)))
-                            and ((green[i].x0 < 470) or (green[i].y0 < 470))):
+                            and ((green[i].x0 < 470) or (green[i].y0 > 270))):  #Error in green win code which I fixed
                             bb = ((green[i].num) + rolls[0 + nc])
                             if bb > 57:
                                 break
@@ -664,7 +647,7 @@ def main():  # Main game function
                             break
 
 
-main()                                               #Main functin is called once when c==0 to intialize all the gamepieces.
+main()  #Main functin is called once when c==0 to intialize all the gamepieces
 
 
 def leftClick(event):  #Function for left click 
@@ -675,9 +658,8 @@ def leftClick(event):  #Function for left click
     cy = root.winfo_pointery() - root.winfo_rooty()
 
     print("Click at: ", cx, cy)
-
     main()   #Main play function called on every click to progress the game
- 
+
 
 root.bind("<Button-1>", leftClick)
 
@@ -701,11 +683,10 @@ def turn():   #Function to print whose turn it is
         L2.place(x=770, y=50)
         
 
-def roll():   #Rolling function that rolls a dice; goes again if its a six
+def roll():   #Function for rolling the dice; goes again if it's a 6; max turns:3
     global rollc, dice, dice1, dice2, TURN, rolls, diceimg
 
     if TURN == True:    
-
         rollc = rollc + 1
         print("roll: ", rollc)
 
@@ -735,7 +716,7 @@ def roll():   #Rolling function that rolls a dice; goes again if its a six
                 TURN = False
 
 
-def clear():        #Clears all the variable prior to next player's turn
+def clear():  #Clears all the variable prior to next player's turn
     global nc, rolls, TURN, L1, L3, L4
     nc = 0
     del rolls[:]
@@ -752,24 +733,24 @@ def clear():        #Clears all the variable prior to next player's turn
     turn()
 
 
-def movecheck(r, rh, rb, la):                               #Check if the player can make a move
+def movecheck(r, rh, rb, la):  #Function to check if the player can make a move
     global dice, dice1, dice2
     
     if (dice == 6 and dice1 == 6 and dice2 == 6):
         return False
 
-    win = True                                              #Checking if the game is won or the player can make any moves.
+    win = True             #Checking if the game is won or the player can make any moves
     for j in range(4):
         if (r[j].x0 != rb[56].x) and (r[j].y0 != rb[56].y):
              win = False
 
-    if win == True:                                         #If all gamepieces are home, output player has won
-        print("YOU HAVE WON") # CHECK WIN CODE
-        L2 = Label(root, text=(la + "Wins"), fg='Black', background='green', font=("Arial", 24, "bold"))
+    if win == True:        #If all gamepieces are home, output player has won
+        print("YOU HAVE WON") 
+        L2 = Label(root, text=(la + " Wins"), fg='Black', background='green', font=("Arial", 24, "bold"))
         L2.place(x=770, y=500)
         return False
 
-    if win == False and dice != 6:                          #If its not a 6 and all game pieces inside home, then next players turn
+    if win == False and dice != 6:  #If its not a 6 and all game pieces inside home, then next players turn
         for i in range(len(r)):
             if(r[i].num != -1):
                 return True
@@ -827,10 +808,10 @@ def doublecheck(a):        #Makes a double is two or more gamepieces on top of a
                 a[i].double = True
 
 
-turn()            #Prints the "red player's turn" initially
+turn()  #Prints the "red player's turn" initially
 
-button = Button(root, text="   ROLL   ", relief="raised", font=("Arial", 20),
-                command=roll)  #Call roll function evertime this button is clicked
+#Call roll function evertime this button is clicked:
+button = Button(root, text="   ROLL   ", relief="raised", font=("Arial", 20), command=roll)  
 button.place(x=805, y=120)
 
 root.mainloop()
